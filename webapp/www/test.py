@@ -26,11 +26,11 @@ loop.close()
 # if loop.is_closed():
 #     sys.exit(0)
 
-'sql check code'
-import mysql.connector
+# 'sql check code'
+# import mysql.connector
 
-conn=mysql.connector.connect(user='www-data', password='www-data', database='awesome')
-cursor=conn.cursor()
-cursor.execute('select * from users')
-data=cursor.fetchall()
-print(data)
+# conn=mysql.connector.connect(user='www-data', password='www-data', database='awesome')
+# cursor=conn.cursor()
+# cursor.execute('select * from users')
+# data=cursor.fetchall()
+# print(data)

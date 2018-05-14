@@ -156,18 +156,23 @@ def add_route(app, fn):
     app.router.add_route(method, path, RequestHandler(app, fn))
 
 def add_routes(app, module_name):
+    #rfind() 返回字符串最后一次出现的位置(从右向左查询)，如果没有匹配项则返回-1。
     n = module_name.rfind('.')
     if n == (-1):
+        # __import__('os',globals(),locals(),['path','pip'])  #等价于from os import path, pip
         mod = __import__(module_name, globals(), locals())
     else:
         name = module_name[n+1:]
         mod = getattr(__import__(module_name[:n], globals(), locals(), [name]), name)
+    logging.info('mod type: %s; dir(mode):%s' % (type(mod),dir(mod)))
     for attr in dir(mod):
         if attr.startswith('_'):
             continue
         fn = getattr(mod, attr)
         if callable(fn):
+            logging.info('callable fn.name = %s' % fn.__name__)
             method = getattr(fn, '__method__', None)
             path = getattr(fn, '__route__', None)
             if method and path:
+                logging.info('fn.name = %s' % fn.__name__)
                 add_route(app, fn)
